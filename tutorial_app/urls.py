@@ -2,8 +2,10 @@ from django.conf.urls import patterns, url
 from tutorial_app import views 
 
 urlpatterns = patterns('',
-	url (r'^$', views.index, name='index'), 
-	url(r'^about/', views.about, name='about'),
+	url (r'^$', views.index, name = 'index'), 
+	url(r'^about/', views.about, name = 'about'),
 	url(r'^category/(?P<category_name_slug>[\W\-]+)/$', views.category, name = 'category'), 
+	url(r'^add-category/', views.add_category, name = 'add-category'),
+	url(r'^category/(?P<category_name_slug>[\W\-]+)/add-page/$', views.add_page, name = 'add-page'),
 	)
 
