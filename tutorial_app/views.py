@@ -27,7 +27,7 @@ def category(request, category_name_slug):
 	except Category.DoesNotExist:
 		pass 
 
-	return render(request, 'category.html', )
+	return render(request, 'category.html', context_dict)
 
 def add_category(request): 
 	if request.method == 'POST' :
@@ -45,9 +45,9 @@ def add_category(request):
 
 def add_page(request, category_name_slug):
 	try:
-		cat = Category.objects.get(slug=category_name_slug)
+			cat = Category.objects.get(slug=category_name_slug)
 	except Category.DoesNotExist:
-		cat = None
+			cat = None
 
 	if request.method == 'POST': 
 		form = PageForm(request.POST)
@@ -55,7 +55,7 @@ def add_page(request, category_name_slug):
 		if form.is_valid():
 			if cat:
 				page = form.save(commit=False)
-				page.category = category
+				page.category = cat
 				page.views = 0
 				page.save()
 				return category(request, category_name_slug)
