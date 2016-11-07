@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
-{% load static %}
 
-{% block body_block %}
+{% load static %}
+{% extends 'base.html' %}
+
+{% black body_block %}
 		{% if user.is_authenticated %}
 		<h1>Welcome to Tutorial App {{ user.username }}</h1>
 		{% else %}
@@ -10,21 +11,22 @@
 
 
 		{% if categories %)
-				{% for category in categories %}
-							<a href="{% url 'category' category.slug %}"><p> {{ category.name }}</p></a>
-				{% endfor %}
+		
+			{% for category in categories %}
+				<a href="category/{{category.slug}}"><p> {{ category.name }}</p></a>
+			{% endfor %}
 		{% else %}
-				<p>There are no categories!</p>
+			<p>There are no categories!</p>
 		{% endif %}
 		{% if pages %}
 				{% for page in pages %}
 				<a href="{{ page.url }}">{{ page.title }}</a> 
-				{% endfor %}
+			{% endfor %}
 		{% else %}
-				<p>There are no pages</p>
+			<p>There are no pages</p>
 		{% endif %}
-
 		
+
 
 		<img src="{% static 'images/photo.jpeg' %}">
 

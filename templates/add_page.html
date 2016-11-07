@@ -1,16 +1,16 @@
-<html>
-<head>
-	<title>Add a Page</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
 
-<body>
+{% block title %}Add Pages{% endblock %}
 
-	<h1>Add a Page</h1>
-		<form id="page_form" method="post" action='/category/{{slug}}/add-page'>
+{% block body_block %}
+
+	<h1>Add a Page {{ category.name }}</h1>
+		<form id="page_form" method='post' action='/category/{{slug}}/add-page/'>
 
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
-				{{hidden}}
+				{{ hidden }}
 			{% endfor %}
 
 			{% for field in form.visible_fields%}
@@ -19,9 +19,7 @@
 				{{ field }}
 			{% endfor %}
 
-			<input type="submit" name="submit" value="Add Page" />
+			<input type='submit' name='submit' value='Add Page'>
 		</form>
-	
-	</body>
 
-</html>
+{% endblock %}
