@@ -5,20 +5,62 @@ from models import Category, Page, UserProfile
 from forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 
 def index(request):
-	category_list = Category.objects.order_by('-likes')[:5]
 	context_dict = {}
+	#request.session.set_test_cookie()
+	#if request.session.test_cookie_worked():
+	#	print ">>>TEST COOKIE WORKED"
+	#	request.session.delete_test_cookie()
+
+	category_list = Category.objects.order_by('-likes')[:5]
+	
 	context_dict['categories'] = category_list
 	page_list = Page.objects.order_by('-views')[:5]
 	context_dict['pages'] = page_list
 
-	return render(request, 'index.html', context_dict)
+	visits = request.session.get('visits')
+		
+	if not visits:
+		visits = 1
+
+	reset_last_visit_time = False 
+
+	last_visit =request.session.get('last_visit')
+	if last_visit:
+		last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+
+		if (datetime.now() -  last_visit_time).seconds > 0:
+			visits = visits + 1
+			reset_last_visit_time = True
+
+	else:
+		reset_last_visit_time = True 
+	
+	if reset_last_visit_time:
+		request.session['last_visit'] = str(datetime.now())
+		request.session['visits'] = visits
+	
+	context_dict['visits'] = visits	
+	response = render(request, 'index.html', context_dict)
+	
+	return response
 
 def about(request):
-	return render(request, 'about.html', {})
+	
+	context_dict = {}
+
+	if request.session.get('visits'):
+		count = request.session.get('visits')
+	else:	count = 0 
+
+	count = count + 1
+	context_dict['visits'] = count
+
+	return render(request, 'about.html', context_dict)
 
 def category(request, category_name_slug):
 	context_dict = {}
