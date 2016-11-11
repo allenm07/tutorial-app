@@ -60,6 +60,7 @@ def about(request):
 	count = count + 1
 	context_dict['visits'] = count
 
+
 	return render(request, 'about.html', context_dict)
 
 def category(request, category_name_slug):

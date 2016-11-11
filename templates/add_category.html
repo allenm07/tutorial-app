@@ -2,9 +2,12 @@
 {% load static %}
 {% block title %}Add category{% endblock %}
 {% block body_block %}
-		<h1>Add Category</h1>
-		<form id='category_form'
+<link rel="stylesheet" type="text/css" href="{% static'css/form.css' %}">
+
+		<h1 class="form-signin-heading">Add Category</h1>
+		<form class ="form-signin" id='category_form'
 		method="post" action='/add-category/'>
+			<h3 class="form=signin-heading">Add a new category.</h3>
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
@@ -13,9 +16,7 @@
 			{% for field in form.visible_fields %}
 				{{ field }}
 			{% endfor %}
+			<button class="btn btn-lrg btn-primary btn-block" type="submit" value="Submit">Add Category</button>
 			
-			<input type="submit" value="Create a Category"/>
-
-
 		</form>
 {% endblock %}

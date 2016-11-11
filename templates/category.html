@@ -20,7 +20,7 @@
 		<a href="{% url 'add-page' category.slug %}">Add a Page</a>
 		{% endif %}
 	{% else %}
-		<p>The specified category {{ category name }} does not exist </p>
+		<p>The specified category {{ category.name }} does not exist </p>
 	{% endif %}
 
 {% endblock %}
